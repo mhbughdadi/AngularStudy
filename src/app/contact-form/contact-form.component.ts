@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class ContactFormComponent {
 
+  log(x: any){console.log(x);}
 }
