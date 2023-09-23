@@ -16,7 +16,18 @@ export class ContactFormComponent {
       id:2,
       name:'SMS'
     }
+  ];
+  genders:Gender[] = [
+    {
+      id:1,
+      name:'Male'
+    },
+    {
+      id:2,
+      name:'Female'
+    }
   ]
+
   log(x: any){console.log(x);}
 
   onSubmit(form: any){
@@ -25,6 +36,11 @@ export class ContactFormComponent {
 }
 
 export interface ContactMethod{
+
+  id:number,
+  name:string
+}
+export interface Gender{
 
   id:number,
   name:string
