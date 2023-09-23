@@ -50,6 +50,13 @@
             Subscripe to mail List
         </label>
     </div>
+    <div class="form-group">
+        <label for="contactMethod">Contact Methods</label>
+        <select multiple ngModel name="contactMethod" id="contactMethod" class="form-control">
+            <option value=""></option>
+            <option *ngFor="let method of contactMethods" [ngValue]="method">{{method.name}}</option>
+        </select>
+    </div>
     <p>
         {{contactForm.value | json}}
     </p>

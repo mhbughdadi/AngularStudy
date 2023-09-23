@@ -7,9 +7,25 @@ import { Component } from '@angular/core';
 })
 export class ContactFormComponent {
 
+  contactMethods:ContactMethod[]=[
+    {
+      id:1,
+      name:'Email'
+    },
+    {
+      id:2,
+      name:'SMS'
+    }
+  ]
   log(x: any){console.log(x);}
 
   onSubmit(form: any){
     console.log(form.value);
   }
+}
+
+export interface ContactMethod{
+
+  id:number,
+  name:string
 }
