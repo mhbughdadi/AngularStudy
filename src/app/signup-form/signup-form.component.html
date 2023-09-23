@@ -12,7 +12,8 @@
                 *ngIf="username.touched && !username.valid">
                 <div *ngIf="username.errors['required']">username is required. </div>
                 <div *ngIf="username.errors['minlength']">username min length is {{username.errors['minlength'].requiredLength}} characters. </div>
-                <div *ngIf="username.errors['maxlength']">username is required. </div>
+                <div *ngIf="username.errors['maxlength']">username max length must not exceeded. </div>
+                <div *ngIf="username.errors['cannotContainSpaces']">username cannot contain spaces. </div>
             </div>
         </div>
         <div class="form-group">
