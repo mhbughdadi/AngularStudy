@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsernameValidators } from '../common/validators/username-validators';
+import { UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'signup-form',
@@ -9,7 +10,7 @@ import { UsernameValidators } from '../common/validators/username-validators';
 })
 export class SignupFormComponent {
 
-  form= new FormGroup({
+  form ; /*  = new FormGroup({
     account: new FormGroup({
       accountNumber: new FormControl('',[
         Validators.required,
@@ -29,7 +30,33 @@ export class SignupFormComponent {
     ]),
     password: new FormControl('',Validators.required),
     topics: new FormArray([])
-  });
+  }); */
+
+  constructor(fb: FormBuilder){
+    this.form=  fb.group(
+      {
+        account: fb.group({
+          accountNumber: ['',[
+            Validators.required,
+            Validators.minLength(3),
+            UsernameValidators.cannotContainSpaces
+          ]],
+          accountType: []
+        }),
+        username: ['',[
+            Validators.required,
+            Validators.minLength(3),
+            UsernameValidators.cannotContainSpaces
+          ],[
+            UsernameValidators.shouldBeUnique
+          ]
+        ],
+        password: [],
+        topics:fb.array([])
+      }
+    );
+    
+  }
 
   get username(){
     return this.form.get('username');
