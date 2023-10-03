@@ -10,6 +10,14 @@ import { UsernameValidators } from '../common/validators/username-validators';
 export class SignupFormComponent {
 
   form= new FormGroup({
+    account: new FormGroup({
+      accountNumber: new FormControl('',[
+        Validators.required,
+        Validators.minLength(3),
+        UsernameValidators.cannotContainSpaces
+      ]),
+      accountType: new FormControl()
+    }),
     username: new FormControl('',[
       Validators.required,
       Validators.minLength(3),
@@ -32,8 +40,15 @@ export class SignupFormComponent {
 
   login() {
    
+    console.log(this.form.value);
     this.form.setErrors({
       uniqueValues:true
     });
+  }
+  get accountNumber (){
+    return this.form.get('account.accountNumber');
+  }
+  get account (){
+    return this.form.get('account');
   }
 }

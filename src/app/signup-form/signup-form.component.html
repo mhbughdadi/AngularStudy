@@ -1,9 +1,11 @@
 <div>
     <form [formGroup]="form" (ngSubmit)="login()">
+
         <div *ngIf="form.errors" class="alert alert-danger">
             username or password is incorrect...
             <div *ngIf="form.errors['uniqueValues']">UniqueValues or custome message </div>
         </div>
+
         <div class="form-group">
             <label for="username">Username</label>
             <input 
@@ -24,6 +26,7 @@
                 <div *ngIf="username.errors['shouldBeUnique']">username is registered before. </div>
             </div>
         </div>
+
         <div class="form-group">
             <label for="password">Password</label>
             <input 
@@ -36,6 +39,33 @@
                 *ngIf="password.touched && !password.valid">
                 username is required.
             </div>
+        </div>
+
+        <div formGroupName="account">
+            <div class="form-group">
+                <label for="accountNumber">Account Number</label>
+                <input type="text" 
+                    id="accountNumber" 
+                    formControlName="accountNumber"
+                    class="form-control">
+                <div 
+                    class="alert alert-danger" 
+                    *ngIf="accountNumber.touched && !accountNumber.valid">
+                    <div *ngIf="accountNumber.errors['required']">accountNumber is required. </div>
+                    <div *ngIf="accountNumber.errors['minlength']">accountNumber min length is {{accountNumber.errors['minlength'].requiredLength}} characters. </div>
+                    <div *ngIf="accountNumber.errors['maxlength']">accountNumber max length must not exceeded. </div>
+                    <div *ngIf="accountNumber.errors['cannotContainSpaces']">accountNumber cannot contain spaces. </div>
+                    <div *ngIf="accountNumber.errors['shouldBeUnique']">accountNumber is registered before. </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="accountType">Account Type</label>
+                <input type="text" 
+                    id="accountType" 
+                    formControlName="accountType"
+                    class="form-control">
+            `</div>
+
         </div>
         <button class="btn btn-primary">Sign Up</button>
 
