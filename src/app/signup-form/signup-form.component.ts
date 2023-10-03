@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsernameValidators } from '../common/validators/username-validators';
 
 @Component({
@@ -27,7 +27,8 @@ export class SignupFormComponent {
     [
       UsernameValidators.shouldBeUnique
     ]),
-    password: new FormControl('',Validators.required)
+    password: new FormControl('',Validators.required),
+    topics: new FormArray([])
   });
 
   get username(){
@@ -45,10 +46,28 @@ export class SignupFormComponent {
       uniqueValues:true
     });
   }
+
+  addTopic(topic: HTMLInputElement) {
+    this.topics.push(new FormControl(topic.value));
+    topic.value= '';
+  }
+
+  removeTopic(topic: AbstractControl){
+    let index = this.topics.controls.indexOf(topic);
+    this.topics.removeAt(((index)));
+  }
+
+  get topics (){
+    return this.form.get('topics') as FormArray;
+  }
+
   get accountNumber (){
     return this.form.get('account.accountNumber');
   }
+
   get account (){
     return this.form.get('account');
   }
+
+
 }
