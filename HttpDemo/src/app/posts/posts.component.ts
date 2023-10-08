@@ -1,3 +1,4 @@
+import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { AppError } from '../common/app.error';
@@ -14,13 +15,11 @@ export class PostsComponent implements OnInit{
 
   posts: any[] | undefined;
   
-  constructor(private _postService: PostService){
-
-  }
+  constructor(private _postService: PostService){ }
 
   ngOnInit(): void {
     this._postService
-      .getPosts().subscribe(
+      .getAll().subscribe(
         response=> {
           this.posts = response as any[];
         }, (error: AppError) => {
@@ -39,7 +38,7 @@ export class PostsComponent implements OnInit{
     let post = { title: postTitle.value };
     postTitle.value = '';
 
-    this._postService.createPost(JSON.stringify(post))
+    this._postService.create(JSON.stringify(post))
     .subscribe( 
       response => {
         post['id'] = response['id'];
@@ -57,7 +56,7 @@ export class PostsComponent implements OnInit{
   updatePost(post:{title: string, id: number}){
 
     // this._httpService.put(); // for few updates of object.
-    this._postService.updatePost(post.id,JSON.stringify(post))
+    this._postService.update(post.id,JSON.stringify(post))
     .subscribe(
       response => {
         console.log(response);
@@ -65,7 +64,7 @@ export class PostsComponent implements OnInit{
   }
 
   deletePost(post:{title: string, id: number}){
-    this._postService.deletePost(post.id)
+    this._postService.delete(post.id)
       .subscribe (
         response => {
           console.log(response);
