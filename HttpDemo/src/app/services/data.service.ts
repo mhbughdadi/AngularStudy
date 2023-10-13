@@ -1,17 +1,21 @@
 import { NotFoundError } from './../common/not-found-error';
 import { HttpClient, HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Injectable, NgModule } from '@angular/core';
+import { Inject, Injectable, NgModule } from '@angular/core';
 
 import { Observable, catchError, of, throwError,map } from 'rxjs';
 import { BadInput } from '../common/bad-input';
 import { JsonPipe } from '@angular/common';
+import { AppError } from '../common/app.error';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
-  constructor(private url: string, private _httpService: HttpClient) {  }
+    // 0220487603
+  constructor(@Inject(String) private url: string, private _httpService: HttpClient) { 
+    this.url = url; 
+    this._httpService = _httpService 
+  }
 
   getAll(){
     return this._httpService.get(this.url)
@@ -22,8 +26,10 @@ export class DataService {
   }
 
   create(resource: any){
-    return this._httpService.post( this.url , resource )
-    .pipe( catchError(error => this.handleErrors(error)));
+
+    return throwError(() =>new AppError("Not Added"))
+    // return this._httpService.post( this.url , resource )
+    // .pipe( catchError(error => this.handleErrors(error)));
   }
 
   update( id: number, resource: any){
@@ -31,9 +37,10 @@ export class DataService {
   }
 
   delete(id: number) {
-    return this._httpService.delete(this.url+'/'+id).pipe(
-      catchError( error => this.handleErrors(error))
-    );
+    return throwError(()=>new AppError("Cannot be deleted"));
+    // return this._httpService.delete(this.url+'/'+id).pipe(
+    //   catchError( error => this.handleErrors(error))
+    // );
   }
 
   handleErrors(error:HttpErrorResponse) {

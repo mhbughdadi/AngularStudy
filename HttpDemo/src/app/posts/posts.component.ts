@@ -36,16 +36,19 @@ export class PostsComponent implements OnInit{
     console.log('posting...');
 
     let post = { title: postTitle.value };
+    this.posts.splice(0,0,post);
+
     postTitle.value = '';
 
     this._postService.create(JSON.stringify(post))
     .subscribe( 
       response => {
         post['id'] = response['id'];
-        this.posts.splice(0,0,post);
         console.log(response);
       }, 
       (error: AppError) => {
+        this.posts.splice(0,1);
+
         if(error instanceof BadInput){
           alert('the body is not correct...')
         } else 
@@ -64,18 +67,20 @@ export class PostsComponent implements OnInit{
   }
 
   deletePost(post:{title: string, id: number}){
+    let index = this.posts.indexOf(post);
+    this.posts.splice(index, 1);
+
     this._postService.delete(post.id)
       .subscribe (
         response => {
           console.log(response);
         }, 
         (error: AppError) => {
+          this.posts.splice(index, 1,post);
           if(error instanceof NotFoundError){
             alert('this post may be deleted.')
           } else 
             throw error;
         });
-      let index = this.posts.indexOf(post);
-      this.posts.splice(index, 1);
   }
 }
