@@ -76,7 +76,7 @@ export class PostsComponent implements OnInit{
           console.log(response);
         }, 
         (error: AppError) => {
-          this.posts.splice(index, 1,post);
+          this.posts.splice(index, 0, post);
           if(error instanceof NotFoundError){
             alert('this post may be deleted.')
           } else 

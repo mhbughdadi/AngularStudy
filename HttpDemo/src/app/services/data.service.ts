@@ -27,7 +27,7 @@ export class DataService {
 
   create(resource: any){
 
-    return throwError(() =>new AppError("Not Added"))
+    return throwError(() =>new AppError("Not Added"));
     // return this._httpService.post( this.url , resource )
     // .pipe( catchError(error => this.handleErrors(error)));
   }
